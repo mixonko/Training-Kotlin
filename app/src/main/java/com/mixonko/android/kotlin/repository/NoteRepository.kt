@@ -8,13 +8,14 @@ import com.mixonko.android.kotlin.database.NoteDataBase
 import com.mixonko.android.kotlin.entity.Note
 
 class NoteRepository(context: Context) {
+    val database = NoteDataBase.getDatabase(context)
+
     private var noteDao: NoteDao
     private var allNotes: LiveData<List<Note>>
 
     init {
-        var database = NoteDataBase.invoke(context)
-        noteDao = database.noteDao()
-        allNotes = noteDao!!.getAllNotes()
+        noteDao = database!!.noteDao()
+        allNotes = noteDao.getAllNotes()
 
     }
 
@@ -64,8 +65,7 @@ class NoteRepository(context: Context) {
 
         }
 
-        private class DeleteAllNotesAsuncTask(var noteDao: NoteDao) :
-            AsyncTask<Void, Void, Void>() {
+        private class DeleteAllNotesAsuncTask(var noteDao: NoteDao): AsyncTask<Void, Void, Void>() {
             override fun doInBackground(vararg params: Void?): Void? {
                 noteDao.deleteAllNotes()
                 return null
