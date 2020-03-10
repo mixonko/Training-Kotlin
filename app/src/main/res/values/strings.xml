@@ -5,4 +5,6 @@
     <string name="priority">Priority</string>
     <string name="save">Save</string>
     <string name="delete_all_notes">Delete all notes</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="save_note">Save Note</string>
 </resources>
