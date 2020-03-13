@@ -16,8 +16,8 @@ import com.mixonko.android.kotlin.adapter.NoteAdapter
 import com.mixonko.android.kotlin.entity.Note
 import com.mixonko.android.kotlin.viewModel.NoteViewModel
 
-val ADD_NOTE_REQUEST: Int = 1
-val EDIT_NOTE_REQUEST : Int = 2
+const val ADD_NOTE_REQUEST: Int = 1
+const val EDIT_NOTE_REQUEST : Int = 2
 
 class MainActivity : AppCompatActivity(), NoteAdapter.ItemClickListener  {
     override fun onItemClick(note: Note) {
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity(), NoteAdapter.ItemClickListener  {
         intent.putExtra(EXTRA_TITLE, note.title)
         intent.putExtra(EXTRA_DESCRIPTION, note.description)
         intent.putExtra(EXTRA_PRIORITY, note.priority)
+
         startActivityForResult(intent, EDIT_NOTE_REQUEST)
     }
 
@@ -70,7 +71,9 @@ class MainActivity : AppCompatActivity(), NoteAdapter.ItemClickListener  {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == ADD_NOTE_REQUEST || resultCode == Activity.RESULT_OK){
+
+        if(requestCode == ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK){
+
             val title = data!!.getStringExtra(EXTRA_TITLE)
             val description = data!!.getStringExtra(EXTRA_DESCRIPTION)
             val priority = data!!.getIntExtra(EXTRA_PRIORITY, 1)
@@ -79,16 +82,17 @@ class MainActivity : AppCompatActivity(), NoteAdapter.ItemClickListener  {
             noteViewModel.incert(note)
 
             Toast.makeText(this, "Note saved", Toast.LENGTH_LONG).show()
-        }else if (requestCode == EDIT_NOTE_REQUEST || resultCode == Activity.RESULT_OK){
+
+        }else if (requestCode == EDIT_NOTE_REQUEST && resultCode == Activity.RESULT_OK){
             val title = data!!.getStringExtra(EXTRA_TITLE)
             val description = data!!.getStringExtra(EXTRA_DESCRIPTION)
             val priority = data!!.getIntExtra(EXTRA_PRIORITY, 1)
-            val id = data!!.getIntExtra(EXTRA_ID, -1)
+            val id = data!!.getIntExtra(EXTRA_ID, -1) 
 
             if (id == -1){
                 return
             }
-            val note = Note(title = title, description = description, priority = priority)
+            var note = Note(title = title, description = description, priority = priority)
             note.id = id
             noteViewModel.update(note)
         }

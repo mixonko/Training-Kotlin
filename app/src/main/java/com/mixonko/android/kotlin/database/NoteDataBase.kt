@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mixonko.android.kotlin.dao.NoteDao
 import com.mixonko.android.kotlin.entity.Note
 
-@Database(entities = arrayOf(Note::class), version = 16)
+@Database(entities = arrayOf(Note::class), version = 1)
 abstract class NoteDataBase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
